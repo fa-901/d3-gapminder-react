@@ -41,3 +41,8 @@
 .fill-americas {
 	fill: #f6efa6;	
 }
+
+.legend {
+	font-size: 10px;
+	text-anchor: middle;
+}
