@@ -15,7 +15,19 @@ export default function App() {
 
 	function startChart() {
 		let data = json[0].countries;
-		console.log(data);
+		// data = data.map((v)=>{
+		// 	return {
+		// 		...v,
+		// 		income: isNaN(parseFloat(v.income)) ? 0 : v.income,
+		// 		life_exp: isNaN(parseFloat(v.life_exp)) ? 0 : v.life_exp,
+		// 		population: isNaN(parseFloat(v.population)) ? 0 : v.population,
+		// 	}
+		// });
+		data = data.filter((v) => {
+			return (!v.income || !v.life_exp) ? false : true
+		});
+		
+		// console.log(data);
 
 		var g = d3.select("#chart-area")
 			.append("svg")
@@ -43,7 +55,7 @@ export default function App() {
 
 		var xAxisCall = d3.axisBottom(x)
 			.tickValues([400, 4000, 40000])
-			.tickFormat((d)=>{ console.log(d); return `$${d}`})
+			.tickFormat((d)=>{ return `$${d}`})
 
 		var yAxisCall = d3.axisLeft(y);
 
@@ -66,6 +78,28 @@ export default function App() {
 			.attr('text-anchor', 'middle')
 			.attr('transform', 'rotate(-90)')
 			.text('Life Expectancy (Years)')
+
+		// var update = () => {
+		// 	var points = g.selectAll("rect")
+		// 		.data(data);
+
+		// 	points.exit().remove();
+
+		// 	points.attr("y", function (d) { return y(d.life_exp); })
+		// 		.attr("x", function (d) { console.log(d); return x(d.income) })
+		// 		.attr("height", function (d) { return height - y(d.life_exp); })
+		// 		.attr("width", x.bandwidth);
+
+		// 	points.enter()
+		// 		.append("rect")
+		// 		.attr("y", function (d) { return y(d.life_exp); })
+		// 		.attr("x", function (d) { return x(d.income) })
+		// 		.attr("height", function (d) { return height - y(d.life_exp); })
+		// 		.attr("width", x.bandwidth)
+		// 		.attr("fill", "grey");
+		// }
+
+		// update();
 	}
 
 
