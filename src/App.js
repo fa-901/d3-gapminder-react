@@ -8,7 +8,7 @@ export default function App() {
 	const margin = { left: 50, right: 20, top: 10, bottom: 40 };
 	const width = 600 - margin.left - margin.right,
 		height = 400 - margin.top - margin.bottom;
-	const timer = 500;
+	const timer = 800;
 
 	useEffect(() => {
 		startChart();
@@ -20,11 +20,10 @@ export default function App() {
 
 	function startChart() {
 		var index = 0;
-		let data = json[0].countries;
-		data = data.filter((v) => {
-			return (!v.income || !v.life_exp) ? false : true
-		});
-
+		// let data = json[0].countries;
+		// data = data.filter((v) => {
+		// 	return (!v.income || !v.life_exp) ? false : true
+		// });
 		// console.log(data);
 
 		var g = d3.select("#chart-area")
@@ -110,9 +109,9 @@ export default function App() {
 				.attr("cy", function (d) { return y(0) })
 				.attr("cx", function (d) { return x(d.income) })
 				.attr('r', function (d) { return Math.sqrt(r(d.population) / Math.PI) })
-				.attr("class", (d) => { return `point fill-${d.continent}` })
 				.merge(points)
 				.transition(t)
+				.attr("class", (d) => { return `point fill-${d.continent}` })
 				.attr("cy", function (d) { return y(d.life_exp) })
 				.attr("cx", function (d) { return x(d.income) });
 		}
