@@ -5,7 +5,7 @@ import json from './data/data.json'
 
 export default function App() {
 
-	const margin = { left: 70, right: 20, top: 10, bottom: 35 };
+	const margin = { left: 50, right: 20, top: 10, bottom: 40 };
 	const width = 600 - margin.left - margin.right,
 		height = 400 - margin.top - margin.bottom;
 
@@ -43,12 +43,29 @@ export default function App() {
 
 		var xAxisCall = d3.axisBottom(x)
 			.tickValues([400, 4000, 40000])
-			.tickFormat((d)=>{ console.log(d); return d})
-			
+			.tickFormat((d)=>{ console.log(d); return `$${d}`})
+
 		var yAxisCall = d3.axisLeft(y);
 
 		xAxis.call(xAxisCall)
 		yAxis.call(yAxisCall)
+
+		var xLabel = g.append('text')
+			.text('GDP Per Capita')
+			.attr('x', width / 2)
+			.attr('y', (height + margin.bottom -5))
+			.attr('text-anchor', 'middle')
+			.attr('font-size', '18px')
+			.attr('text-anchor', 'middle')
+
+		var yLabel = g.append('text')
+			.attr('x', -(height / 2))
+			.attr('y', -(margin.left - margin.right))
+			.attr('text-anchor', 'middle')
+			.attr('font-size', '18px')
+			.attr('text-anchor', 'middle')
+			.attr('transform', 'rotate(-90)')
+			.text('Life Expectancy (Years)')
 	}
 
 
