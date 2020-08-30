@@ -8,10 +8,11 @@ export default function App() {
 	const margin = { left: 50, right: 20, top: 10, bottom: 40 };
 	const width = 600 - margin.left - margin.right,
 		height = 400 - margin.top - margin.bottom;
+	const timer = 1000;
 
 	useEffect(() => {
 		startChart();
-	}, []);
+	});
 
 	function startChart() {
 		var index = 0;
@@ -30,7 +31,6 @@ export default function App() {
 			.attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 		var x = d3.scaleLog()
-			// .domain([300, d3.max(data, (d) => { return d.income })])
 			.domain([100, 150000])
 			.range([0, width]);
 
@@ -39,7 +39,6 @@ export default function App() {
 			.attr('transform', `translate(0, ${height})`);
 
 		var y = d3.scaleLinear()
-			// .domain([0, d3.max(data, (d) => { return d.life_exp })])
 			.domain([0, 90])
 			.range([height, 0]);
 
@@ -78,13 +77,17 @@ export default function App() {
 			.attr('y', (height - 3))
 			.attr('class', 'year-label');
 
-		var t = d3.transition().duration(500);
+		var t = d3.transition().duration(timer/3);
 
 		var update = () => {
 			let data = json[index].countries;
 			data = data.filter((v) => {
 				return (!v.income || !v.life_exp) ? false : true
 			});
+
+			var radScale = d3.scaleLinear()
+				.domain([d3.min(data, (d) => { return d.population }), d3.max(data, (d) => { return d.population })])
+				.range([5, 25]);
 
 			yearLabel.text(`${json[index].year}`);
 
@@ -102,7 +105,7 @@ export default function App() {
 				.append("circle")
 				.attr("cy", function (d) { return y(0) })
 				.attr("cx", function (d) { return x(d.income) })
-				.attr('r', radius)
+				.attr('r', function (d) { return radius })
 				.merge(points)
 				.transition(t)
 				.attr("cy", function (d) { return y(d.life_exp) })
@@ -113,7 +116,7 @@ export default function App() {
 		setInterval(() => {
 			(index === (json.length - 1)) ? index = 0 : index++;
 			update();
-		}, 1000);
+		}, timer);
 		update();
 	}
 
