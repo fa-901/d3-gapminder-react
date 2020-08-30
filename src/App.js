@@ -73,13 +73,18 @@ export default function App() {
 			.attr('transform', 'rotate(-90)')
 			.text('Life Expectancy (Years)')
 
+		var yearLabel = g.append('text')
+			.attr('x', width)
+			.attr('y', (height - 3))
+			.attr('class', 'year-label');
+
 		var update = () => {
 			let data = json[index].countries;
 			data = data.filter((v) => {
 				return (!v.income || !v.life_exp) ? false : true
 			});
 
-			console.log(json[index].year);
+			yearLabel.text(`${json[index].year}`);
 			
 			let radius = 5;
 			
