@@ -42,7 +42,9 @@ export default function App() {
 			.attr('transform', `translate(0, 0)`);
 
 		var xAxisCall = d3.axisBottom(x)
-			.tickValues([400, 4000, 40000]);
+			.tickValues([400, 4000, 40000])
+			.tickFormat((d)=>{ console.log(d); return d})
+			
 		var yAxisCall = d3.axisLeft(y);
 
 		xAxis.call(xAxisCall)
