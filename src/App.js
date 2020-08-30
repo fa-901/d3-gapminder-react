@@ -14,6 +14,10 @@ export default function App() {
 		startChart();
 	});
 
+	function area(r) {
+		return (Math.pow(r, 2) * Math.PI)
+	}
+
 	function startChart() {
 		var index = 0;
 		let data = json[0].countries;
@@ -85,9 +89,13 @@ export default function App() {
 				return (!v.income || !v.life_exp) ? false : true
 			});
 
-			var radScale = d3.scaleLinear()
+			var r = d3.scaleLinear()
 				.domain([d3.min(data, (d) => { return d.population }), d3.max(data, (d) => { return d.population })])
-				.range([5, 25]);
+				.range([area(5), area(25)]);
+
+			// var c = d3.scaleLinear()
+			// 	.domain(d3.data.map((v)=> {return v.continent}).keys())
+			// 	.range(d3.schemeSet2);
 
 			yearLabel.text(`${json[index].year}`);
 
@@ -105,7 +113,7 @@ export default function App() {
 				.append("circle")
 				.attr("cy", function (d) { return y(0) })
 				.attr("cx", function (d) { return x(d.income) })
-				.attr('r', function (d) { return radius })
+				.attr('r', function (d) { return Math.sqrt(r(d.population) / Math.PI) })
 				.merge(points)
 				.transition(t)
 				.attr("cy", function (d) { return y(d.life_exp) })
