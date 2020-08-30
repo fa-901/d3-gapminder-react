@@ -8,7 +8,7 @@ export default function App() {
 	const margin = { left: 50, right: 20, top: 10, bottom: 40 };
 	const width = 600 - margin.left - margin.right,
 		height = 400 - margin.top - margin.bottom;
-	const timer = 1000;
+	const timer = 500;
 
 	useEffect(() => {
 		startChart();
@@ -25,7 +25,7 @@ export default function App() {
 			return (!v.income || !v.life_exp) ? false : true
 		});
 
-		console.log(data);
+		// console.log(data);
 
 		var g = d3.select("#chart-area")
 			.append("svg")
@@ -35,7 +35,7 @@ export default function App() {
 			.attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 		var x = d3.scaleLog()
-			.domain([100, 150000])
+			.domain([100, 200000])
 			.range([0, width]);
 
 		var xAxis = g.append("g")
@@ -81,7 +81,7 @@ export default function App() {
 			.attr('y', (height - 3))
 			.attr('class', 'year-label');
 
-		var t = d3.transition().duration(timer/3);
+		var t = d3.transition().duration(timer / 3);
 
 		var update = () => {
 			let data = json[index].countries;
@@ -93,10 +93,6 @@ export default function App() {
 				.domain([d3.min(data, (d) => { return d.population }), d3.max(data, (d) => { return d.population })])
 				.range([area(5), area(25)]);
 
-			// var c = d3.scaleLinear()
-			// 	.domain(d3.data.map((v)=> {return v.continent}).keys())
-			// 	.range(d3.schemeSet2);
-
 			yearLabel.text(`${json[index].year}`);
 
 			let radius = 5;
@@ -105,7 +101,7 @@ export default function App() {
 				.data(data, (d) => { return d.country });
 
 			points.exit()
-				.transition(t)
+				// .transition(t)
 				.attr('cy', y(0))
 				.remove();
 
@@ -114,11 +110,11 @@ export default function App() {
 				.attr("cy", function (d) { return y(0) })
 				.attr("cx", function (d) { return x(d.income) })
 				.attr('r', function (d) { return Math.sqrt(r(d.population) / Math.PI) })
+				.attr("class", (d) => { return `point fill-${d.continent}` })
 				.merge(points)
 				.transition(t)
 				.attr("cy", function (d) { return y(d.life_exp) })
-				.attr("cx", function (d) { return x(d.income) })
-				.attr("class", "point");
+				.attr("cx", function (d) { return x(d.income) });
 		}
 
 		setInterval(() => {

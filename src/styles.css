@@ -19,7 +19,6 @@
 }
 
 .point {
-	fill: grey;
 	stroke-width: 1px;
 	stroke: black;
 }
@@ -28,4 +27,17 @@
 	text-anchor: end;
 	font-size: 50px;
 	fill: #aaa;
+}
+
+.fill-asia {
+	fill: #8fcfd1;	
+}
+.fill-africa {
+	fill: #df5e88;	
+}
+.fill-europe {
+	fill: #f6ab6c;	
+}
+.fill-americas {
+	fill: #f6efa6;	
 }
