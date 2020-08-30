@@ -15,19 +15,11 @@ export default function App() {
 
 	function startChart() {
 		let data = json[0].countries;
-		// data = data.map((v)=>{
-		// 	return {
-		// 		...v,
-		// 		income: isNaN(parseFloat(v.income)) ? 0 : v.income,
-		// 		life_exp: isNaN(parseFloat(v.life_exp)) ? 0 : v.life_exp,
-		// 		population: isNaN(parseFloat(v.population)) ? 0 : v.population,
-		// 	}
-		// });
 		data = data.filter((v) => {
 			return (!v.income || !v.life_exp) ? false : true
 		});
 		
-		// console.log(data);
+		console.log(data);
 
 		var g = d3.select("#chart-area")
 			.append("svg")
@@ -46,7 +38,8 @@ export default function App() {
 			.attr('transform', `translate(0, ${height})`);
 
 		var y = d3.scaleLinear()
-			.domain([0, d3.max(data, (d) => { return d.life_exp })])
+			// .domain([0, d3.max(data, (d) => { return d.life_exp })])
+			.domain([0, 50])
 			.range([height, 0]);
 
 		var yAxis = g.append("g")
@@ -79,27 +72,21 @@ export default function App() {
 			.attr('transform', 'rotate(-90)')
 			.text('Life Expectancy (Years)')
 
-		// var update = () => {
-		// 	var points = g.selectAll("rect")
-		// 		.data(data);
+		var update = () => {
+			var points = g.selectAll("circle")
+				.data(data);
 
-		// 	points.exit().remove();
+			points.exit().remove();
 
-		// 	points.attr("y", function (d) { return y(d.life_exp); })
-		// 		.attr("x", function (d) { console.log(d); return x(d.income) })
-		// 		.attr("height", function (d) { return height - y(d.life_exp); })
-		// 		.attr("width", x.bandwidth);
+			points.enter()
+				.append("circle")
+				.attr("cy", function (d) { return y(d.life_exp); })
+				.attr("cx", function (d) { return x(d.income) })
+				.attr('r', 5)
+				.attr("fill", "grey");
+		}
 
-		// 	points.enter()
-		// 		.append("rect")
-		// 		.attr("y", function (d) { return y(d.life_exp); })
-		// 		.attr("x", function (d) { return x(d.income) })
-		// 		.attr("height", function (d) { return height - y(d.life_exp); })
-		// 		.attr("width", x.bandwidth)
-		// 		.attr("fill", "grey");
-		// }
-
-		// update();
+		update();
 	}
 
 
