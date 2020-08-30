@@ -14,6 +14,7 @@ export default function App() {
 	}, []);
 
 	function startChart() {
+		var index = 0;
 		let data = json[0].countries;
 		data = data.filter((v) => {
 			return (!v.income || !v.life_exp) ? false : true
@@ -73,20 +74,35 @@ export default function App() {
 			.text('Life Expectancy (Years)')
 
 		var update = () => {
+			let data = json[index].countries;
+			data = data.filter((v) => {
+				return (!v.income || !v.life_exp) ? false : true
+			});
+
+			console.log(json[index].year);
+			
 			let radius = 5;
+			
 			var points = g.selectAll("circle")
-				.data(data);
+				.data(data, (d) => { return d.country });
 
 			points.exit().remove();
 
 			points.enter()
 				.append("circle")
-				.attr("cy", function (d) { return y(d.life_exp) - radius })
+				.attr("cy", function (d) { return y(0) })
 				.attr("cx", function (d) { return x(d.income) - radius })
 				.attr('r', radius)
+				.merge(points)
+				.attr("cy", function (d) { return y(d.life_exp) - radius })
+				.attr("cx", function (d) { return x(d.income) - radius })
 				.attr("class", "point");
 		}
 
+		setInterval(() => {
+			(index === (json.length - 1)) ? index = 0 : index++;
+			update();
+		}, 1000);
 		update();
 	}
 
