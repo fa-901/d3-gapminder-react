@@ -78,6 +78,8 @@ export default function App() {
 			.attr('y', (height - 3))
 			.attr('class', 'year-label');
 
+		var t = d3.transition().duration(500);
+
 		var update = () => {
 			let data = json[index].countries;
 			data = data.filter((v) => {
@@ -85,22 +87,26 @@ export default function App() {
 			});
 
 			yearLabel.text(`${json[index].year}`);
-			
+
 			let radius = 5;
-			
+
 			var points = g.selectAll("circle")
 				.data(data, (d) => { return d.country });
 
-			points.exit().remove();
+			points.exit()
+				.transition(t)
+				.attr('cy', y(0))
+				.remove();
 
 			points.enter()
 				.append("circle")
 				.attr("cy", function (d) { return y(0) })
-				.attr("cx", function (d) { return (x(d.income)) })
+				.attr("cx", function (d) { return x(d.income) })
 				.attr('r', radius)
 				.merge(points)
-				.attr("cy", function (d) { return (y(d.life_exp)) })
-				.attr("cx", function (d) { return (x(d.income)) })
+				.transition(t)
+				.attr("cy", function (d) { return y(d.life_exp) })
+				.attr("cx", function (d) { return x(d.income) })
 				.attr("class", "point");
 		}
 
