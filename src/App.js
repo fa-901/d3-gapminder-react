@@ -96,11 +96,11 @@ export default function App() {
 			points.enter()
 				.append("circle")
 				.attr("cy", function (d) { return y(0) })
-				.attr("cx", function (d) { return (x(d.income) - radius) })
+				.attr("cx", function (d) { return (x(d.income)) })
 				.attr('r', radius)
 				.merge(points)
-				.attr("cy", function (d) { return (y(d.life_exp) - radius) })
-				.attr("cx", function (d) { return (x(d.income) - radius) })
+				.attr("cy", function (d) { return (y(d.life_exp)) })
+				.attr("cx", function (d) { return (x(d.income)) })
 				.attr("class", "point");
 		}
 
