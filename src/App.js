@@ -31,7 +31,7 @@ export default function App() {
 
 		var x = d3.scaleLog()
 			// .domain([300, d3.max(data, (d) => { return d.income })])
-			.domain([300, 150000])
+			.domain([100, 150000])
 			.range([0, width]);
 
 		var xAxis = g.append("g")
@@ -96,11 +96,11 @@ export default function App() {
 			points.enter()
 				.append("circle")
 				.attr("cy", function (d) { return y(0) })
-				.attr("cx", function (d) { return x(d.income) - radius })
+				.attr("cx", function (d) { return (x(d.income) - radius) })
 				.attr('r', radius)
 				.merge(points)
-				.attr("cy", function (d) { return y(d.life_exp) - radius })
-				.attr("cx", function (d) { return x(d.income) - radius })
+				.attr("cy", function (d) { return (y(d.life_exp) - radius) })
+				.attr("cx", function (d) { return (x(d.income) - radius) })
 				.attr("class", "point");
 		}
 
