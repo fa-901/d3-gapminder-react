@@ -18,7 +18,7 @@ export default function App() {
 		data = data.filter((v) => {
 			return (!v.income || !v.life_exp) ? false : true
 		});
-		
+
 		console.log(data);
 
 		var g = d3.select("#chart-area")
@@ -39,7 +39,7 @@ export default function App() {
 
 		var y = d3.scaleLinear()
 			// .domain([0, d3.max(data, (d) => { return d.life_exp })])
-			.domain([0, 50])
+			.domain([0, 90])
 			.range([height, 0]);
 
 		var yAxis = g.append("g")
@@ -48,7 +48,7 @@ export default function App() {
 
 		var xAxisCall = d3.axisBottom(x)
 			.tickValues([400, 4000, 40000])
-			.tickFormat((d)=>{ return `$${d}`})
+			.tickFormat((d) => { return `$${d}` })
 
 		var yAxisCall = d3.axisLeft(y);
 
@@ -58,7 +58,7 @@ export default function App() {
 		var xLabel = g.append('text')
 			.text('GDP Per Capita')
 			.attr('x', width / 2)
-			.attr('y', (height + margin.bottom -5))
+			.attr('y', (height + margin.bottom - 5))
 			.attr('text-anchor', 'middle')
 			.attr('font-size', '18px')
 			.attr('text-anchor', 'middle')
@@ -73,6 +73,7 @@ export default function App() {
 			.text('Life Expectancy (Years)')
 
 		var update = () => {
+			let radius = 5;
 			var points = g.selectAll("circle")
 				.data(data);
 
@@ -80,10 +81,10 @@ export default function App() {
 
 			points.enter()
 				.append("circle")
-				.attr("cy", function (d) { return y(d.life_exp); })
-				.attr("cx", function (d) { return x(d.income) })
-				.attr('r', 5)
-				.attr("fill", "grey");
+				.attr("cy", function (d) { return y(d.life_exp) - radius })
+				.attr("cx", function (d) { return x(d.income) - radius })
+				.attr('r', radius)
+				.attr("class", "point");
 		}
 
 		update();

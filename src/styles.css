@@ -1,19 +1,25 @@
 .App {
-  font-family: sans-serif;
-  text-align: center;
+	font-family: sans-serif;
+	text-align: center;
 }
 
 #chart-area svg {
 	margin-left: auto;
-    margin-right: auto;
-    display: block;
+	margin-right: auto;
+	display: block;
 }
 
 #logo {
-	height:50px;
+	height: 50px;
 }
 
 .navbar-brand {
 	height: 60px;
 	padding: 5px 0px;
+}
+
+.point {
+	fill: grey;
+	stroke-width: 1px;
+	stroke: black;
 }
