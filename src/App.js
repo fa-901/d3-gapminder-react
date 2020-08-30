@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./styles.css";
+import data from './data/data.json'
 
 export default function App() {
+
+	useEffect(()=>{
+		startChart();
+	}, []);
+
+	function startChart() {
+		console.log(data)
+	}
+
+
 	return (
 		<div className="App">
 			<nav className="navbar navbar-default">
