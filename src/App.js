@@ -1,6 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, Fragment } from "react";
+import ReactDOMServer from 'react-dom/server';
 import * as d3 from 'd3';
-import "./styles.css";
+import d3Tip from 'd3-tip';
+import "./styles/styles.css";
+import "./styles/tip.css";
 import json from './data/data.json'
 
 export default function App() {
@@ -83,6 +86,33 @@ export default function App() {
 
 		addLegend(g, width, height);
 
+		var tip = d3Tip()
+			.attr('class', 'd3-tip')
+			.html((d) => {
+				let html = (
+					<Fragment>
+						<div>
+							<span>Country:</span><span className='ml-2 tiptext'>{d.country}</span>
+						</div>
+						<div>
+							<span>Continent:</span><span className='ml-2 tiptext'>{d.continent}</span>
+						</div>
+						<div>
+							<span>Life Expectancy:</span><span className='ml-2 tiptext'>{d3.format('.2f')(d.life_exp)}</span>
+						</div>
+						<div>
+							<span>GDP Per Capita:</span><span className='ml-2 tiptext'>{d3.format('$,.0f')(d.income)}</span>
+						</div>
+						<div>
+							<span>Population:</span><span className='ml-2 tiptext'>{d3.format(',.0f')(d.population)}</span>
+						</div>
+					</Fragment>
+				)
+				return ReactDOMServer.renderToStaticMarkup(html);
+			});
+
+		g.call(tip);
+
 		var update = () => {
 			let data = json[index].countries;
 			data = data.filter((v) => {
@@ -101,7 +131,6 @@ export default function App() {
 				.data(data, (d) => { return d.country });
 
 			points.exit()
-				// .transition(t)
 				.attr('cy', y(0))
 				.remove();
 
@@ -110,6 +139,8 @@ export default function App() {
 				.attr("cy", function (d) { return y(0) })
 				.attr("cx", function (d) { return x(d.income) })
 				.attr('r', function (d) { return Math.sqrt(r(d.population) / Math.PI) })
+				.on('mouseover', tip.show)
+				.on('mouseout', tip.hide)
 				.merge(points)
 				.transition(t)
 				.attr("class", (d) => { return `point fill-${d.continent}` })
