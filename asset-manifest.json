@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/d3-gapminder-clone/static/css/main.7c516027.chunk.css",
-    "main.js": "/d3-gapminder-clone/static/js/main.e7e416c4.chunk.js",
-    "main.js.map": "/d3-gapminder-clone/static/js/main.e7e416c4.chunk.js.map",
+    "main.css": "/d3-gapminder-clone/static/css/main.648627b8.chunk.css",
+    "main.js": "/d3-gapminder-clone/static/js/main.6edc7b00.chunk.js",
+    "main.js.map": "/d3-gapminder-clone/static/js/main.6edc7b00.chunk.js.map",
     "runtime~main.js": "/d3-gapminder-clone/static/js/runtime~main.b864f531.js",
     "runtime~main.js.map": "/d3-gapminder-clone/static/js/runtime~main.b864f531.js.map",
-    "static/js/2.1eba78f4.chunk.js": "/d3-gapminder-clone/static/js/2.1eba78f4.chunk.js",
-    "static/js/2.1eba78f4.chunk.js.map": "/d3-gapminder-clone/static/js/2.1eba78f4.chunk.js.map",
+    "static/js/2.e386bfec.chunk.js": "/d3-gapminder-clone/static/js/2.e386bfec.chunk.js",
+    "static/js/2.e386bfec.chunk.js.map": "/d3-gapminder-clone/static/js/2.e386bfec.chunk.js.map",
     "index.html": "/d3-gapminder-clone/index.html",
-    "precache-manifest.b63fed38a39a37100915e81869979750.js": "/d3-gapminder-clone/precache-manifest.b63fed38a39a37100915e81869979750.js",
+    "precache-manifest.1cf2ad8fd1a620ef070fb77dbea32236.js": "/d3-gapminder-clone/precache-manifest.1cf2ad8fd1a620ef070fb77dbea32236.js",
     "service-worker.js": "/d3-gapminder-clone/service-worker.js",
-    "static/css/main.7c516027.chunk.css.map": "/d3-gapminder-clone/static/css/main.7c516027.chunk.css.map"
+    "static/css/main.648627b8.chunk.css.map": "/d3-gapminder-clone/static/css/main.648627b8.chunk.css.map"
   }
 }

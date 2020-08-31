@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/d3-gapminder-clone/precache-manifest.b63fed38a39a37100915e81869979750.js"
+  "/d3-gapminder-clone/precache-manifest.1cf2ad8fd1a620ef070fb77dbea32236.js"
 );
 
 self.addEventListener('message', (event) => {
