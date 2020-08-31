@@ -1,13 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import * as d3 from 'd3';
 import "./styles.css";
 import json from './data/data.json'
 
 export default function App() {
 
+	const chartArea = useRef(null);
 	const margin = { left: 50, right: 50, top: 10, bottom: 40 };
-	const width = 600 - margin.left - margin.right,
-		height = 400 - margin.top - margin.bottom;
 	const timer = 800;
 
 	useEffect(() => {
@@ -19,12 +18,11 @@ export default function App() {
 	}
 
 	function startChart() {
+		const width = chartArea.current.clientWidth - margin.left - margin.right,
+			height = (document.documentElement.clientHeight - 80) - margin.top - margin.bottom;
+		const timer = 800;
+
 		var index = 0;
-		// let data = json[0].countries;
-		// data = data.filter((v) => {
-		// 	return (!v.income || !v.life_exp) ? false : true
-		// });
-		// console.log(data);
 
 		var g = d3.select("#chart-area")
 			.append("svg")
@@ -81,9 +79,9 @@ export default function App() {
 			.attr('y', (height - 3))
 			.attr('class', 'year-label');
 
-		var t = d3.transition().duration(timer / 3);
+		var t = d3.transition().duration(timer / 2);
 
-		addLegend(g);
+		addLegend(g, width, height);
 
 		var update = () => {
 			let data = json[index].countries;
@@ -126,7 +124,7 @@ export default function App() {
 		update();
 	}
 
-	function addLegend(g) {
+	function addLegend(g, width, height) {
 		var legendGroup = g.append('g');
 		
 		['Asia', 'Africa', 'Europe', 'Americas'].map((v, i) => {
@@ -157,9 +155,7 @@ export default function App() {
 			</nav>
 
 			<div className="container">
-				<div className="row">
-					<div id="chart-area"></div>
-				</div>
+				<div id="chart-area" ref={chartArea}></div>
 			</div>
 		</div>
 	);
